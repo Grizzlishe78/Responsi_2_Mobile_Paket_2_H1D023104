@@ -124,6 +124,6 @@ File Penting dan Fungsinya
 - **Fungsi**: Helper untuk membuat HTTP request ke API
 - **Method penting**: `get()`, `post()`, `put()`, `delete()` - menangani komunikasi dengan backend
 
-#### 10. 👤 `lib/helpers/user_info.dart`
+`lib/helpers/user_info.dart`
 - **Fungsi**: Menyimpan dan mengambil data user dari SharedPreferences (token, userID)
 - **Method penting**: `setToken()`, `getToken()`, `setUserID()`, `getUserID()`
