@@ -8,7 +8,7 @@ Shift Baru : D<br>
 
 Video Demo Aplikasi
 Berikut ditampilkan video saat menjalankan aplikasi :<br>
-![Demo Aplikasi](docs/demo-elsamart.gif)
+![Demo Aplikasi](docs/GIF.gif)
 
 Spesifikasi API (API Spec)
 
