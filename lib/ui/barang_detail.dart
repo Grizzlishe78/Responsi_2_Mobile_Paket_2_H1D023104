@@ -79,13 +79,16 @@ class _BarangDetailState extends State<BarangDetail> {
             side: const BorderSide(color: Colors.green),
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           ),
-          onPressed: () {
-            Navigator.push(
+          onPressed: () async {
+            bool? isUpdated = await Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => BarangForm(barang: widget.barang!),
               ),
             );
+            if (isUpdated == true) {
+              setState(() {});
+            }
           },
           child: const Text('Edit'),
         ),
@@ -103,20 +106,20 @@ class _BarangDetailState extends State<BarangDetail> {
     );
   }
 
-void confirmHapus() {
+  void confirmHapus() {
     AlertDialog alertDialog = AlertDialog(
       content: const Text("Yakin ingin menghapus data ini?"),
       actions: [
         OutlinedButton(
           child: const Text("Ya"),
           onPressed: () {
-            BarangBloc.deleteBarang(id: int.parse(widget.barang!.id!))
+            BarangBloc.deleteBarang(id: widget.barang!.id!)
                 .then((value) {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const BarangPage()),
-                  );
+                  Navigator.of(context).pop(); 
+                  Navigator.of(context).pop(true);
                 })
                 .catchError((error) {
+                  Navigator.pop(context); 
                   showDialog(
                     context: context,
                     builder: (BuildContext context) => const WarningDialog(

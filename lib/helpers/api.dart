@@ -4,9 +4,14 @@ import 'package:http/http.dart' as http;
 import 'user_info.dart';
 import 'app_exception.dart';
 
-class ApiService {
+class ApiService { 
+  
+  Future<String?> _getToken() async {
+    return await UserInfo().getToken(); 
+  }
+
   Future<dynamic> get(String url) async {
-    String? token = await UserInfo().getToken();
+    String? token = await _getToken();
 
     Map<String, String> headers = {
       HttpHeaders.acceptHeader: 'application/json',
@@ -27,11 +32,11 @@ class ApiService {
     }
   }
 
-  Future<dynamic> post(String url, dynamic data) async {
-    String? token = await UserInfo().getToken();
+  Future<dynamic> post(String url, Map<String, dynamic> data) async {
+    String? token = await _getToken();
 
     Map<String, String> headers = {
-      HttpHeaders.contentTypeHeader: 'application/json',
+      HttpHeaders.contentTypeHeader: 'application/json', 
       HttpHeaders.acceptHeader: 'application/json',
     };
 
@@ -43,16 +48,42 @@ class ApiService {
       final response = await http.post(
         Uri.parse(url),
         headers: headers,
-        body: data,
+        body: json.encode(data), 
       );
+
       return _returnResponse(response);
     } on SocketException {
       throw FetchDataException("No Internet Connection");
     }
   }
 
-  Future<dynamic> put(String url, dynamic data) async {
-    String? token = await UserInfo().getToken();
+  Future<dynamic> postForm(String url, Map<String, dynamic> data) async {
+    String? token = await _getToken();
+
+    Map<String, String> headers = {
+      HttpHeaders.contentTypeHeader: 'application/x-www-form-urlencoded', 
+      HttpHeaders.acceptHeader: 'application/json',
+    };
+
+    if (token != null) {
+      headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+    }
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: data, 
+      );
+
+      return _returnResponse(response);
+    } on SocketException {
+      throw FetchDataException("No Internet Connection");
+    }
+  }
+
+  Future<dynamic> put(String url, Map<String, dynamic> data) async {
+    String? token = await _getToken();
 
     Map<String, String> headers = {
       HttpHeaders.contentTypeHeader: 'application/json',
@@ -67,8 +98,9 @@ class ApiService {
       final response = await http.put(
         Uri.parse(url),
         headers: headers,
-        body: data,
+        body: json.encode(data),
       );
+
       return _returnResponse(response);
     } on SocketException {
       throw FetchDataException("No Internet Connection");
@@ -76,7 +108,7 @@ class ApiService {
   }
 
   Future<dynamic> delete(String url) async {
-    String? token = await UserInfo().getToken();
+    String? token = await _getToken();
 
     Map<String, String> headers = {
       HttpHeaders.acceptHeader: 'application/json',
@@ -110,6 +142,8 @@ class ApiService {
       case 422:
         throw InvalidInputException(response.body.toString());
       default:
+        print("API ERROR CODE: ${response.statusCode}");
+        print("API ERROR BODY: ${response.body}");
         throw FetchDataException(
           "Error occurred while communicating with server. Status Code: ${response.statusCode}",
         );

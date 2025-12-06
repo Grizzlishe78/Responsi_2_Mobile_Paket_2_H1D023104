@@ -1,56 +1,75 @@
 import 'dart:convert';
-import 'package:ngawimarket/helpers/api.dart';
+import 'package:flutter/foundation.dart'; 
+import 'package:ngawimarket/helpers/api.dart'; 
 import 'package:ngawimarket/helpers/api_url.dart';
 import 'package:ngawimarket/model/barang.dart';
 
-class BarangBloc {
+class BarangBloc extends ChangeNotifier {
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  set isLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   static Future<List<Barang>> getBarang() async {
     String apiUrl = ApiUrl.listBarang;
-    var response = await ApiService().get(apiUrl);
-    var jsonObj = json.decode(response);
-    List<dynamic> listBarang = jsonObj['data'];
+    ApiService apiService = ApiService(); 
 
-    List<Barang> barangs = listBarang.map((e) => Barang.fromJson(e)).toList();
-    return barangs;
+    var response = await apiService.get(apiUrl);
+    var jsonObj = json.decode(response);
+
+    List<dynamic> listBarang = jsonObj['data'];
+    return listBarang.map((e) => Barang.fromJson(e)).toList();
   }
 
   static Future addBarang({Barang? barang}) async {
     String apiUrl = ApiUrl.createBarang;
+    ApiService apiService = ApiService();
 
-    var body = jsonEncode({
-      'nama': barang?.nama,
-      'harga': barang?.harga.toString(),
-      'jumlah': barang?.jumlah.toString(),
-      'tanggal_masuk': barang?.tanggal_masuk,
-      'tanggal_kedaluwarsa': barang?.tanggal_kedaluwarsa,
-    });
+    Map<String, dynamic> body = barang?.toJson() ?? {};
+    
+    body.remove('id'); 
 
-    var response = await ApiService().post(apiUrl, body);
-    var jsonObj = json.decode(response);
-    return jsonObj['status'];
+    var response = await apiService.post(apiUrl, body);
+    var status = json.decode(response)['status'] ?? false;
+    return status;
   }
 
-  static Future updateBarang({Barang? barang}) async {
-    String apiUrl = ApiUrl.updateBarang(int.parse(barang!.id!));
+  Future updateBarang(Barang barang) async {
+    isLoading = true; 
+    ApiService apiService = ApiService();
 
-    var body = jsonEncode({
-      'nama': barang.nama,
-      'harga': barang.harga.toString(),
-      'jumlah': barang.jumlah.toString(),
-      'tanggal_masuk': barang.tanggal_masuk,
-      'tanggal_kedaluwarsa': barang.tanggal_kedaluwarsa,
-    });
+    var body = barang.toJson(); 
+    var id = body.remove('id') as String?; 
 
-    var response = await ApiService().put(apiUrl, body);
-    var jsonObj = json.decode(response);
-    return jsonObj['status'];
-  }
+    if (id == null) {
+      isLoading = false;
+      throw Exception("ID Barang tidak boleh null untuk update.");
+    }
+    
+    print("URL PUT DIKIRIM: ${ApiUrl.updateBarang(id)}");
+    print("BODY PUT DIKIRIM: $body");
 
-  static Future<bool> deleteBarang({int? id}) async {
-    String apiUrl = ApiUrl.deleteBarang(id!);
+    try {
+      var response = await apiService.put(ApiUrl.updateBarang(id), body);
+      isLoading = false;
+      return response;
+    } catch (e) {
+      isLoading = false;
+      rethrow;
+    }
+}
 
-    var response = await ApiService().delete(apiUrl);
-    var jsonObj = json.decode(response);
-    return jsonObj['status'];
+  static Future<bool> deleteBarang({String? id}) async {
+    if (id == null) return false;
+    
+    ApiService apiService = ApiService();
+    String apiUrl = ApiUrl.deleteBarang(id);
+    
+    var response = await apiService.delete(apiUrl);
+
+    return json.decode(response)['status'] ?? false;
   }
 }

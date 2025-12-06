@@ -7,12 +7,12 @@ class LoginBloc {
   static Future<Login> login({String? email, String? password}) async {
     String apiUrl = ApiUrl.login;
 
-    var body = jsonEncode({
+    Map<String, dynamic> body = {
       'email': email,
       'password': password,
-    });
+    };
 
-    var response = await ApiService().post(apiUrl, body);
+    var response = await ApiService().postForm(apiUrl, body);
     var jsonObj = json.decode(response);
 
     return Login.fromJson(jsonObj);
