@@ -12,6 +12,11 @@ Berikut ditampilkan video saat menjalankan aplikasi :<br>
 ![gif1](https://github.com/Grizzlishe78/Responsi_2_Mobile_Paket_2_H1D023104/blob/main/docs/Gif.gif)
 
 Spesifikasi API (API Spec)
+* Framework: Flutter
+* State Management: BLoC Pattern
+* HTTP Client: http package
+* Local Storage: shared_preferences
+* Backend: REST API (localhost:8080)
 
 Registrasi
 | Endpoint | `/registrasi` |
