@@ -1,6 +1,6 @@
-NgawiMart - Responsi 2 Praktikum Pemrograman Mobile <br>
+NgawiMarket - Responsi 2 Praktikum Pemrograman Mobile <br>
 
-Aplikasi sederhana pengelolaan inventaris barang bahan makanan pada supermarket NgawiMart yang memiliki fitur login, register, dan CRUD produk.<br> Aplikasi dibangun dengan menggunakan Flutter dan terintegrasi dengan API melalui CodeIgniter3.<br>
+Aplikasi sederhana pengelolaan inventaris barang bahan makanan pada supermarket NgawiMarket yang memiliki fitur login, register, dan CRUD produk.<br> Aplikasi dibangun dengan menggunakan Flutter dan terintegrasi dengan API melalui CodeIgniter3.<br>
 Nama: Simon Dimas Pramudya<br>
 NIM: H1D023104<br>
 Shift Awal : G<br>
