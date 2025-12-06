@@ -1,16 +1,8 @@
-# ngawimarket
+🛒 NgawiMart - Responsi 2 Praktikum Pemrograman Mobile
+Aplikasi sederhana pengelolaan inventaris barang bahan makanan pada supermarket NgawiMart yang memiliki fitur login, register, dan CRUD produk. Aplikasi dibangun dengan menggunakan Flutter dan terintegrasi dengan API melalui CodeIgniter3.
+Nama: Simon Dimas Pramudya
+NIM: H1D023104
+Shift Awal : G
+Shift Baru : D
 
-A new Flutter project.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
