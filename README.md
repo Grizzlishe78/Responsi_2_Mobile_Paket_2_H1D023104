@@ -9,7 +9,7 @@ Shift Baru : D<br>
 Video Demo Aplikasi
 Berikut ditampilkan video saat menjalankan aplikasi :<br>
 ![Demo](docs/GIF.gif)
-![gif1]https://github.com/Grizzlishe78/Responsi_2_Mobile_Paket_2_H1D023104/blob/main/docs/Gif.gif
+![gif1](https://github.com/Grizzlishe78/Responsi_2_Mobile_Paket_2_H1D023104/blob/main/docs/Gif.gif)
 
 Spesifikasi API (API Spec)
 
