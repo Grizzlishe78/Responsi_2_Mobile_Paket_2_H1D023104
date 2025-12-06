@@ -8,7 +8,7 @@ Shift Baru : D<br>
 
 Video Demo Aplikasi
 Berikut ditampilkan video saat menjalankan aplikasi :<br>
-![Demo Aplikasi](docs/GIF.gif)
+![Demo](docs/GIF.gif)
 
 Spesifikasi API (API Spec)
 
